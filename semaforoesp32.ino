@@ -1,3 +1,19 @@
+#include <WiFi.h>
+#include <WiFiClient.h>
+
+#include <WebServer.h>
+#include <string.h>
+
+WebServer server(80);
+
+const char *ssid = "Wifi-TREV";
+const char *password = "12345678";
+
+IPAddress local_IP(192,168,0,80);
+IPAddress gateway(192,168,0,1);
+IPAddress subnet(255,255,255,0);
+
+
 const int pinLed1 = 2;
 const int pinLed2 = 4;
 const int pinLed3 = 5;
@@ -13,6 +29,15 @@ int tempoverde = 5000;
 int tempoamarelo = 2000;
 
 void setup() {
+Serial.begin(115200);
+Serial.print("Configurando AP.....");
+Serial.println(WiFi.softAPConfig)(local_IP, gateway, subnet)? "OK" : "Erro");
+Serial.print("Iniciando o Wifi.....");
+Serial.println(WiFi.softAP(ssid, password));
+Serial.print("Endereço IP");
+Serial.println(WiFi.softAPIP());
+
+
 pinMode(pinLed1, OUTPUT);
 pinMode(pinLed2, OUTPUT);
 pinMode(pinLed3, OUTPUT);
